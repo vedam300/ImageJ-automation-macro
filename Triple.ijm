@@ -1,0 +1,26 @@
+open();
+wait(2000);
+imgName = getTitle();
+print(imgName);
+run("Split Channels");
+run("Brightness/Contrast...");
+selectWindow("C1-" + imgName);
+run("Enhance Contrast", "saturated=0.35");
+selectWindow("C3-" + imgName);
+run("Enhance Contrast", "saturated=0.35");
+selectWindow("C4-" + imgName);
+run("Enhance Contrast", "saturated=0.35");
+run("Merge Channels...", "c1=C1-"+ imgName + " c2=C2-"+ imgName + " c3=C3-"+ imgName + " c4=C4-"+ imgName + " create");
+run("Channels Tool...");
+Stack.setActiveChannels("0011");
+waitForUser
+run("Red");
+run("Stack to RGB", "slices keep");
+saveAs("Tiff");
+close();
+Stack.setActiveChannels("1001");
+run("Green");
+run("Stack to RGB", "slices keep");
+saveAs("Tiff");
+close();
+close();
